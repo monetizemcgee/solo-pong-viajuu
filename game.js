@@ -44,21 +44,23 @@ function draw() {
   if (upPressed && paddleY > 0) paddleY -= 7;
   else if (downPressed && paddleY < canvas.height - paddleHeight) paddleY += 7;
 
-  if (x + dx < ballRadius + paddleWidth && y > paddleY && y < paddleY + paddleHeight) {
-    dx = -dx;
-    score++;
-    document.getElementById("score").textContent = score;
-    if (score > highScore) {
-      highScore = score;
-      document.getElementById("highScore").textContent = highScore;
+  if (x + dx < paddleWidth + ballRadius) {
+    if (y > paddleY && y < paddleY + paddleHeight) {
+      dx = -dx;
+      score++;
+      document.getElementById("score").textContent = score;
+      if (score > highScore) {
+        highScore = score;
+        document.getElementById("highScore").textContent = highScore;
+      }
+    } else {
+      ctx.font = "28px Arial";
+      ctx.fillStyle = "#FF4444";
+      ctx.fillText("Game Over", canvas.width / 2 - 70, canvas.height / 2);
+      clearInterval(gameInterval);
+      document.getElementById("gameOver").style.display = "block";
+      return;
     }
-  } else if (x + dx < 0) {
-    ctx.font = "28px Arial";
-    ctx.fillStyle = "#FF4444";
-    ctx.fillText("Game Over", canvas.width / 2 - 70, canvas.height / 2);
-    clearInterval(gameInterval);
-    document.getElementById("gameOver").style.display = "block";
-    return;
   }
 
   if (x + dx > canvas.width - ballRadius || x + dx < ballRadius) dx = -dx;
