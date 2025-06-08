@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Solo Pong - ViaJuu</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Solo Pong</h1>
+  <canvas id="pongCanvas" width="480" height="320"></canvas>
+  <div id="scoreContainer">
+    <p>Score: <span id="score">0</span></p>
+    <p>High Score: <span id="highScore">0</span></p>
+  </div>
+  <div id="gameOver" style="display:none;">
+    <h2>Game Over</h2>
+    <input type="text" id="nickname" placeholder="Enter your name">
+    <button onclick="submitScore()">Submit Score</button>
+  </div>
+  <div id="leaderboard">
+    <h3>Top Scores</h3>
+    <ul id="leaderboardList"></ul>
+  </div>
+  <script src="firebase.js"></script>
+  <script src="leaderboard.js"></script>
+  <script src="game.js"></script>
+</body>
+</html>
