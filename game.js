@@ -53,8 +53,12 @@ function draw() {
       document.getElementById("highScore").textContent = highScore;
     }
   } else if (x + dx < 0) {
+    ctx.font = "28px Arial";
+    ctx.fillStyle = "#FF4444";
+    ctx.fillText("Game Over", canvas.width / 2 - 70, canvas.height / 2);
     clearInterval(gameInterval);
     document.getElementById("gameOver").style.display = "block";
+    return;
   }
 
   if (x + dx > canvas.width - ballRadius || x + dx < ballRadius) dx = -dx;
