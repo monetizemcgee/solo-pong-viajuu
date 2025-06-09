@@ -3,16 +3,27 @@ import { ref, push, query, orderByChild, limitToLast, onValue } from "https://ww
 const db = window.firebaseDB;
 const scoresRef = ref(db, "scores");
 
+// Submit the score and provide feedback
 function submitScore() {
-  const nickname = document.getElementById("nickname").value;
+  const nickname = document.getElementById("nickname").value.trim();
   const score = parseInt(document.getElementById("score").textContent);
-  if (nickname) {
-    push(scoresRef, { name: nickname, score: score });
-    document.getElementById("nickname").value = "";
-    document.getElementById("gameOver").style.display = "none";
+  if (!nickname) {
+    alert("Please enter a nickname.");
+    return;
   }
+
+  push(scoresRef, { name: nickname, score: score })
+    .then(() => {
+      alert("Score submitted successfully!");
+      document.getElementById("nickname").value = "";
+      document.getElementById("gameOver").style.display = "none";
+    })
+    .catch((error) => {
+      alert("Error submitting score: " + error.message);
+    });
 }
 
+// Load the leaderboard
 function updateLeaderboard() {
   const leaderboardList = document.getElementById("leaderboardList");
   leaderboardList.innerHTML = "";
@@ -28,6 +39,13 @@ function updateLeaderboard() {
     }
   });
 }
+
+// Allow pressing Enter to submit score
+document.addEventListener("keydown", function(e) {
+  if (e.key === "Enter" && document.getElementById("gameOver").style.display === "block") {
+    submitScore();
+  }
+});
 
 updateLeaderboard();
 window.submitScore = submitScore;
